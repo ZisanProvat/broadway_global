@@ -4,141 +4,292 @@
 
 @section('extra-styles')
     <style>
-        /* Hero Section */
-        .hero {
+        /* Parallax Master */
+        .parallax-master {
+            width: 100%;
+            height: 85vh; /* Reduced from 100vh */
             position: relative;
-            height: 85vh;
-            display: flex;
-            align-items: center;
-            padding: 0 8%;
-            color: var(--white);
+            background: #020617;
             overflow: hidden;
-            background: #0A1D37;
-            /* Solid fallback */
             z-index: 1;
         }
 
-        .hero-bg-video {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: url('https://picsum.photos/seed/broadwayglobal/3840/2160') center/cover no-repeat;
-            z-index: 2;
-            opacity: 0.7;
-            animation: cinematicPan 25s ease-in-out infinite alternate;
-            transform-origin: center;
-        }
-
-        @keyframes cinematicPan {
-            0% {
-                transform: scale(1);
-            }
-
-            100% {
-                transform: scale(1.15) translate(-20px, -10px);
-            }
-        }
-
-        .hero-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(to right, rgba(10, 29, 55, 0.85), rgba(10, 29, 55, 0.4));
-            z-index: 3;
-        }
-
-        .hero-content {
-            max-width: 850px;
+        .parallax-scene {
             position: relative;
-            z-index: 4;
+            width: 100%;
+            height: 100%;
         }
 
-        .hero-content h1 {
-            font-size: 4.8rem;
-            font-weight: 800;
-            line-height: 1.1;
-            margin-bottom: 25px;
-            letter-spacing: -2px;
-            opacity: 0;
-            transform: translateY(40px);
-            animation: heroFadeUp 1s cubic-bezier(0.4, 0, 0.2, 1) 0.3s forwards;
+        .layer {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            will-change: transform;
         }
 
-        .hero-content p {
-            font-size: 1.25rem;
-            margin-bottom: 40px;
-            opacity: 0;
-            max-width: 650px;
-            animation: heroFadeUp 1s cubic-bezier(0.4, 0, 0.2, 1) 0.55s forwards;
+        /* Layer 1: Sky */
+        .layer-sky {
+            background: linear-gradient(180deg, #1e1b4b 0%, #4c1d95 50%, #9d174d 100%);
+            z-index: 1;
         }
 
-        .hero-features {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 15px;
-            margin-bottom: 40px;
-            max-width: 700px;
-            opacity: 0;
-            animation: heroFadeUp 1s cubic-bezier(0.4, 0, 0.2, 1) 0.75s forwards;
-        }
-
-        .btn-apply {
-            opacity: 0;
-            animation: heroFadeUp 1s cubic-bezier(0.4, 0, 0.2, 1) 0.95s forwards;
-        }
-
-        @keyframes heroFadeUp {
-            to {
-                opacity: 1;
-                transform: translateY(0) scale(1);
-            }
-
-            from {
-                opacity: 0;
-                transform: translateY(40px);
-            }
-        }
-
-        .h-feature {
-            background: rgba(255, 255, 255, 0.15);
-            backdrop-filter: blur(10px);
-            padding: 15px 25px;
-            border-radius: 8px;
+        /* Sun / Moon */
+        .layer-sun {
+            z-index: 2;
             display: flex;
             align-items: center;
-            gap: 15px;
-            font-weight: 600;
-            font-size: 1rem;
-            border: 1px solid rgba(255, 255, 255, 0.2);
+            justify-content: center;
+        }
+        .sun-orb {
+            width: 40vw;
+            height: 40vw;
+            border-radius: 50%;
+            background: radial-gradient(circle, #fcd34d 0%, #f59e0b 40%, transparent 70%);
+            filter: blur(20px);
+            opacity: 0.8;
+            transform: translateY(20vh);
         }
 
-        .h-feature i {
+        /* Layer 2: Mountains BG */
+        .layer-mountains {
+            z-index: 3;
+            bottom: -5%;
+            top: auto;
+            height: 60vh;
+        }
+        .layer-mountains svg {
+            width: 100vw;
+            height: 100%;
+            display: block;
+        }
+
+        /* Layer 3: Mountains FG */
+        .layer-mountains-fg {
+            z-index: 5;
+            bottom: -10%;
+            top: auto;
+            height: 40vh;
+        }
+        .layer-mountains-fg svg {
+            width: 100vw;
+            height: 100%;
+            display: block;
+        }
+
+        /* Magical Glowing Waterfall (CSS Art) */
+        .waterfall-container {
+            position: absolute;
+            left: 15%;
+            top: 0;
+            width: 15vw;
+            height: 100%;
+            z-index: 4;
+            opacity: 0; /* Hidden in phase 1 */
+            filter: drop-shadow(0 0 30px rgba(124, 58, 237, 0.6));
+        }
+        .waterfall {
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(180deg, rgba(167, 139, 250, 0.8) 0%, rgba(139, 92, 246, 0.4) 50%, transparent 100%);
+            mask-image: linear-gradient(to bottom, black 0%, black 80%, transparent 100%);
+            -webkit-mask-image: linear-gradient(to bottom, black 0%, black 80%, transparent 100%);
+        }
+        .waterfall::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 200%;
+            background: repeating-linear-gradient(to bottom, transparent, transparent 10px, rgba(255,255,255,0.2) 10px, rgba(255,255,255,0.2) 20px);
+            animation: waterfallFlow 2s linear infinite;
+        }
+        @keyframes waterfallFlow {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(-50%); }
+        }
+
+        /* Compass Object */
+        .hero-object-layer {
+            z-index: 6;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            pointer-events: none;
+        }
+        .obj-compass {
+            width: 30vw;
+            max-width: 400px;
+            filter: drop-shadow(0 20px 40px rgba(0,0,0,0.8)) drop-shadow(0 0 20px rgba(252, 211, 77, 0.4));
+        }
+
+        /* Text Phases */
+        .text-phase {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 10;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 0 10%;
+            opacity: 0; /* Managed by GSAP */
+            pointer-events: none;
+        }
+        
+        .text-phase.active {
+            pointer-events: auto;
+        }
+
+        .huge-title {
+            font-size: 10vw;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: -2px;
+            color: rgba(255,255,255,0.9);
+            margin: 0;
+            line-height: 1;
+            /* Mix blend mode for cinematic effect over the sun */
+            mix-blend-mode: overlay;
+        }
+
+        .huge-title-solid {
+            font-size: 10vw;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: -2px;
+            margin: 0;
+            line-height: 1;
+            background: linear-gradient(to bottom, #ffffff 20%, #a5b4fc 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            filter: drop-shadow(0 10px 20px rgba(0,0,0,0.5));
+        }
+
+        .phase-content {
+            width: 40vw;
+            margin-top: 20px;
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 1.1rem;
+            line-height: 1.6;
+            text-shadow: 0 5px 15px rgba(0,0,0,0.8);
+        }
+        
+        .phase-content.right-aligned {
+            align-self: flex-end;
+            text-align: right;
+        }
+        .phase-content.right-aligned .btn-text {
+            justify-content: flex-end;
+        }
+
+        .btn-explore {
+            margin-top: 30px;
+            padding: 15px 30px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: white;
+            font-weight: 700;
+            font-size: 1rem;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .btn-explore:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+        }
+
+        .btn-text {
+            margin-top: 30px;
+            background: none;
+            border: none;
+            color: white;
+            font-weight: 700;
+            font-size: 1.1rem;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            border-bottom: 2px solid transparent;
+            padding-bottom: 5px;
+            transition: 0.3s;
+        }
+        .btn-text:hover {
+            border-bottom-color: #FCD34D;
+            color: #FCD34D;
+            gap: 15px;
+        }
+        
+        /* Custom Birds */
+        .bird {
+            position: absolute;
+            width: 20px;
+            height: 10px;
+            border-radius: 50%;
+            border-top: 2px solid white;
+            z-index: 6;
+            opacity: 0.6;
+        }
+        .bird::before, .bird::after {
+            content: '';
+            position: absolute;
+            width: 12px;
+            height: 10px;
+            border-top: 2px solid white;
+            border-radius: 50%;
+            top: 0;
+        }
+        .bird::before { left: -8px; transform: rotate(20deg); }
+        .bird::after { right: -8px; transform: rotate(-20deg); }
+        
+        .bird-1 { top: 30%; left: 20%; transform: scale(1); }
+        .bird-2 { top: 25%; left: 25%; transform: scale(0.8); }
+        .bird-3 { top: 32%; left: 28%; transform: scale(0.6); }
+
+        /* Hero Features Grid */
+        .hero-features-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-top: 30px;
+        }
+        .hero-feat-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(5px);
+            padding: 12px 15px;
+            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+        .hero-feat-item i {
             color: #FCD34D;
         }
 
-        .btn-apply {
-            background: linear-gradient(135deg, #7C3AED, #0891B2);
-            color: var(--white);
-            padding: 18px 50px;
-            border-radius: 50px;
-            font-weight: 800;
-            font-size: 1.1rem;
-            display: inline-flex;
-            align-items: center;
-            gap: 15px;
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
-            transition: 0.3s;
-        }
-
-        .btn-apply:hover {
-            background: linear-gradient(135deg, #FCD34D, #F9A8D4);
-            color: var(--primary);
-            transform: translateY(-5px);
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.25);
+        /* General Cinematic Overrides for Homepage */
+        .scroll-progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 0%;
+            height: 4px;
+            background: linear-gradient(90deg, #7C3AED, #0891B2, #DB2777);
+            z-index: 9999;
+            box-shadow: 0 0 10px rgba(124, 58, 237, 0.5);
+            pointer-events: none;
         }
 
         /* Partners */
@@ -382,6 +533,65 @@
             box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12);
         }
 
+        .service-list {
+            display: none;
+        }
+        .service-list.active {
+            display: grid;
+        }
+
+        /* Popular Destinations */
+        .dest-section {
+            background: #fff;
+            position: relative;
+            z-index: 5;
+        }
+        .dest-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 25px;
+        }
+        .dest-card {
+            position: relative;
+            height: 350px;
+            border-radius: 20px;
+            overflow: hidden;
+            cursor: pointer;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+        .dest-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: 0.6s;
+        }
+        .dest-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(10, 29, 55, 0.9), transparent);
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            padding: 30px;
+            color: white;
+            transition: 0.4s;
+        }
+        .dest-card:hover img { transform: scale(1.1); }
+        .dest-card:hover .dest-overlay { background: linear-gradient(to top, rgba(124, 58, 237, 0.9), transparent); }
+        
+        .dest-info h4 { font-size: 1.5rem; font-weight: 800; margin-bottom: 5px; }
+        .dest-info p { font-size: 0.85rem; opacity: 0.8; margin: 0; }
+        .dest-flag {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 40px;
+            height: 30px;
+            border-radius: 4px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            object-fit: cover;
+        }
+
         /* Featured Videos */
         .videos-section {
             background: linear-gradient(135deg, #0A1D37 0%, #1e0a3c 50%, #0c2a4a 100%);
@@ -581,7 +791,7 @@
 
         /* Professional Affiliations & Accreditation */
         .affil-section {
-            background: linear-gradient(135deg, #0A1D37 0%, #7C3AED 60%, #4F46E5 100%);
+            background: linear-gradient(135deg, #1e1b4b 0%, #0f172a 60%, #020617 100%);
             color: var(--white);
         }
 
@@ -780,23 +990,23 @@
         }
 
         @media (max-width: 992px) {
-            .hero {
-                height: auto;
-                padding: 100px 5% 60px;
-                min-height: 100vh;
-                display: flex;
-                align-items: center;
+            .hero-text-container {
+                transform: translateY(20px);
             }
 
-            .hero-content h1 {
-                font-size: 2.2rem;
+            .hero-text-container h1 {
+                font-size: 2.5rem;
                 line-height: 1.2;
                 margin-bottom: 20px;
             }
 
-            .hero-content p {
+            .hero-text-container p {
                 font-size: 1rem;
                 margin-bottom: 30px;
+            }
+
+            .initial-title h1 {
+                font-size: 8vw;
             }
 
             .hero-features {
@@ -814,6 +1024,16 @@
 
             .h-feature i {
                 font-size: 1.2rem;
+            }
+
+            .hero-actions {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .btn-apply, .btn-outline-light {
+                width: 100%;
+                justify-content: center;
             }
 
             .section-padding {
@@ -856,29 +1076,136 @@
         }
 
         @media (max-width: 480px) {
-            .hero-content h1 {
+            .hero-text-container h1 {
                 font-size: 2.2rem;
             }
+        }
+
+        .scroll-down-indicator {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .scroll-arrow {
+            width: 40px;
+            height: 40px;
+            border: 2px solid rgba(255, 255, 255, 0.5);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            animation: bounce 2s infinite;
+        }
+
+        .scroll-down-indicator:hover .scroll-arrow {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: #fff;
+        }
+
+        @keyframes scrollWheel {
+            0% { transform: translate(-50%, 0); opacity: 1; }
+            100% { transform: translate(-50%, 15px); opacity: 0; }
+        }
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateX(-50%) translateY(0); }
+            40% { transform: translateX(-50%) translateY(-10px); }
+            60% { transform: translateX(-50%) translateY(-5px); }
         }
     </style>
 @endsection
 
 @section('content')
+    <!-- Scroll Progress Bar -->
+    <div class="scroll-progress-bar"></div>
+
     <!-- Hero Section -->
-    <section class="hero">
-        <div class="hero-bg-video"></div>
-        <div class="hero-overlay"></div>
-        <div class="hero-content">
-            <h1>Your Journey to Global Success Starts Here</h1>
-            <p>Expert guidance from university selection to visa processing. We make your study abroad dreams a reality with
-                100% transparency.</p>
-            <div class="hero-features">
-                <div class="h-feature"><i class="fas fa-check"></i> Experienced & Expert Team</div>
-                <div class="h-feature"><i class="fas fa-check"></i> Trusted Admission Support</div>
-                <div class="h-feature"><i class="fas fa-check"></i> Free Counseling & Assessment</div>
-                <div class="h-feature"><i class="fas fa-check"></i> 100% Transparent in Processing</div>
+    <section class="parallax-master">
+        <div class="parallax-scene">
+            <!-- Layers -->
+            <div class="layer layer-sky"></div>
+            <div class="layer layer-sun">
+                <div class="sun-orb"></div>
             </div>
-            <a href="#" class="btn-apply">Apply Now <i class="fas fa-arrow-right"></i></a>
+            <div class="layer layer-mountains">
+                <!-- SVG mountain silhouette -->
+                <svg viewBox="0 0 1440 320" preserveAspectRatio="none"><path fill="#1e1b4b" fill-opacity="1" d="M0,192L48,197.3C96,203,192,213,288,229.3C384,245,480,267,576,250.7C672,235,768,181,864,181.3C960,181,1056,235,1152,234.7C1248,235,1344,181,1392,154.7L1440,128L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path></svg>
+            </div>
+            
+            <div class="waterfall-container">
+                <div class="waterfall"></div>
+            </div>
+
+            <div class="layer layer-mountains-fg">
+                <svg viewBox="0 0 1440 320" preserveAspectRatio="none"><path fill="#020617" fill-opacity="1" d="M0,256L60,245.3C120,235,240,213,360,213.3C480,213,600,235,720,240C840,245,960,235,1080,208C1200,181,1320,139,1380,117.3L1440,96L1440,320L1380,320C1320,320,1200,320,1080,320C960,320,840,320,720,320C600,320,480,320,360,320C240,320,120,320,60,320L0,320Z"></path></svg>
+            </div>
+            
+            <div class="layer moving-objects">
+                <div class="bird bird-1"></div>
+                <div class="bird bird-2"></div>
+                <div class="bird bird-3"></div>
+            </div>
+
+            <!-- Compass Object -->
+            <div class="layer hero-object-layer">
+                <img src="{{ asset('images/compass.png') }}" alt="Compass" class="obj-compass">
+            </div>
+
+            <!-- Text Phases -->
+            <div class="text-phase phase-1">
+                <h1 class="huge-title">DISCOVER</h1>
+                <div class="phase-content">
+                    <p>Away from the ordinary, begins your journey to global success. Find your perfect study destination with Broadway Global.</p>
+                    
+                    <!-- Restored Features -->
+                    <div class="hero-features-grid">
+                        <div class="hero-feat-item"><i class="fas fa-check-circle"></i> Expert Team</div>
+                        <div class="hero-feat-item"><i class="fas fa-check-circle"></i> Trusted Support</div>
+                        <div class="hero-feat-item"><i class="fas fa-check-circle"></i> Free Counseling</div>
+                        <div class="hero-feat-item"><i class="fas fa-check-circle"></i> 100% Transparent</div>
+                    </div>
+
+                    <button class="btn-explore" style="margin-top: 40px;">Start the journey <i class="fas fa-play"></i></button>
+                </div>
+            </div>
+
+            <div class="text-phase phase-2">
+                <h1 class="huge-title-solid">GUIDANCE</h1>
+                <div class="phase-content right-aligned">
+                    <p>Navigating the complexities of university admissions and visa processing. We provide the tranquility of expert, transparent support.</p>
+                    <button class="btn-text">Learn more <i class="fas fa-arrow-right"></i></button>
+                </div>
+            </div>
+
+            <div class="text-phase phase-3">
+                <h1 class="huge-title-solid">SUCCESS</h1>
+                <div class="phase-content">
+                    <p>Join a diverse ecosystem of successful students across top global universities. Your future is waiting.</p>
+                    <button class="btn-explore" style="background: linear-gradient(135deg, #7C3AED, #0891B2); border: none;">Apply Now <i class="fas fa-arrow-right"></i></button>
+                </div>
+            </div>
+
+            <!-- Scroll Indicator -->
+            <div class="scroll-down-indicator" onclick="window.lenis.scrollTo('.partners')">
+                <div class="scroll-arrow">
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <p>Explore</p>
+            </div>
         </div>
     </section>
 
@@ -983,10 +1310,11 @@
         <div class="why-content reveal-left">
             <h2>Why should you choose Broadway Global Group</h2>
             <div class="service-tabs">
-                <button class="tab-btn active">POST VISA SERVICES</button>
-                <button class="tab-btn">PRE VISA SERVICES</button>
+                <button class="tab-btn active" onclick="switchTab(event, 'post-visa')">POST VISA SERVICES</button>
+                <button class="tab-btn" onclick="switchTab(event, 'pre-visa')">PRE VISA SERVICES</button>
             </div>
-            <div class="service-list">
+            
+            <div id="post-visa" class="service-list active">
                 <div class="service-item"><i class="fas fa-chevron-right"></i> Pre Departure Guidance</div>
                 <div class="service-item"><i class="fas fa-chevron-right"></i> Assessment on Profile</div>
                 <div class="service-item"><i class="fas fa-chevron-right"></i> Ticketing Assistance</div>
@@ -996,16 +1324,81 @@
                 <div class="service-item"><i class="fas fa-chevron-right"></i> Assistance to Finding Jobs</div>
                 <div class="service-item"><i class="fas fa-chevron-right"></i> Legal & Immigration Support</div>
             </div>
+
+            <div id="pre-visa" class="service-list">
+                <div class="service-item"><i class="fas fa-chevron-right"></i> Course Selection</div>
+                <div class="service-item"><i class="fas fa-chevron-right"></i> University Selection</div>
+                <div class="service-item"><i class="fas fa-chevron-right"></i> Scholarship Assistance</div>
+                <div class="service-item"><i class="fas fa-chevron-right"></i> Document Preparation</div>
+                <div class="service-item"><i class="fas fa-chevron-right"></i> SOP & LOR Guidance</div>
+                <div class="service-item"><i class="fas fa-chevron-right"></i> Interview Preparation</div>
+                <div class="service-item"><i class="fas fa-chevron-right"></i> Financial Counseling</div>
+                <div class="service-item"><i class="fas fa-chevron-right"></i> Career Path Mapping</div>
+            </div>
         </div>
         <div class="why-images reveal-right">
             <div class="img-large">
-                <img src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80"
-                    alt="Consultancy">
+                <img src="{{ asset('images/consultancy_side.png') }}" alt="Consultancy">
             </div>
-            <img src="https://images.unsplash.com/photo-1523050854058-8df90110c9f1?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
-                alt="Students">
-            <img src="https://images.unsplash.com/photo-1541339903292-87044c067274?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
-                alt="University">
+            <img src="{{ asset('images/students_collage.png') }}" alt="Students">
+            <img src="{{ asset('images/hero_study.png') }}" alt="University">
+        </div>
+    </section>
+
+    <!-- Popular Destinations -->
+    <section class="section-padding dest-section">
+        <div class="text-center reveal">
+            <h2 class="section-title">Popular Destinations</h2>
+            <p class="section-subtitle">Choose from over 15+ countries to begin your international education journey.</p>
+        </div>
+        <div class="dest-grid">
+            <!-- USA -->
+            <div class="dest-card reveal reveal-delay-1" onclick="window.location.href='/destinations/usa'">
+                <img src="https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&w=600&q=80" alt="USA">
+                <img src="https://flagcdn.com/us.svg" class="dest-flag" alt="USA Flag">
+                <div class="dest-overlay">
+                    <div class="dest-info">
+                        <h4>USA</h4>
+                        <p>World-class education and innovation.</p>
+                    </div>
+                </div>
+            </div>
+            <!-- UK -->
+            <div class="dest-card reveal reveal-delay-2" onclick="window.location.href='/destinations/uk'">
+                <img src="https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?auto=format&fit=crop&w=600&q=80" alt="UK">
+                <img src="https://flagcdn.com/gb.svg" class="dest-flag" alt="UK Flag">
+                <div class="dest-overlay">
+                    <div class="dest-info">
+                        <h4>United Kingdom</h4>
+                        <p>Rich history and academic excellence.</p>
+                    </div>
+                </div>
+            </div>
+            <!-- Canada -->
+            <div class="dest-card reveal reveal-delay-3" onclick="window.location.href='/destinations/canada'">
+                <img src="https://images.unsplash.com/photo-1503614472-8c93d56e92ce?auto=format&fit=crop&w=600&q=80" alt="Canada">
+                <img src="https://flagcdn.com/ca.svg" class="dest-flag" alt="Canada Flag">
+                <div class="dest-overlay">
+                    <div class="dest-info">
+                        <h4>Canada</h4>
+                        <p>Welcoming environment and post-grad options.</p>
+                    </div>
+                </div>
+            </div>
+            <!-- Australia -->
+            <div class="dest-card reveal reveal-delay-4" onclick="window.location.href='/destinations/australia'">
+                <img src="https://images.unsplash.com/photo-1523482580672-f109ba8cb9be?auto=format&fit=crop&w=600&q=80" alt="Australia">
+                <img src="https://flagcdn.com/au.svg" class="dest-flag" alt="Australia Flag">
+                <div class="dest-overlay">
+                    <div class="dest-info">
+                        <h4>Australia</h4>
+                        <p>High quality of life and great universities.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="text-center" style="margin-top: 50px;">
+            <a href="#" class="btn-read" style="justify-content: center; font-size: 1.1rem; color: #7C3AED;">Explore All 15+ Countries <i class="fas fa-globe"></i></a>
         </div>
     </section>
 
@@ -1180,4 +1573,267 @@
             </div>
         </div>
     </section>
+@endsection
+
+@section('extra-scripts')
+<script>
+    function switchTab(event, tabId) {
+        // Remove active class from all buttons
+        document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+        // Add active class to clicked button
+        event.currentTarget.classList.add('active');
+        
+        // Hide all lists
+        document.querySelectorAll('.service-list').forEach(list => {
+            list.classList.remove('active');
+            gsap.to(list, { opacity: 0, y: 10, duration: 0.2, display: 'none' });
+        });
+        
+        // Show target list
+        const target = document.getElementById(tabId);
+        target.classList.add('active');
+        gsap.fromTo(target, 
+            { opacity: 0, y: 10, display: 'grid' }, 
+            { opacity: 1, y: 0, duration: 0.4, ease: "power2.out" }
+        );
+    }
+
+    document.addEventListener("DOMContentLoaded", (event) => {
+        gsap.registerPlugin(ScrollTrigger);
+
+        let mm = gsap.matchMedia();
+
+        mm.add("(min-width: 992px)", () => {
+            // ==========================================
+            // 1. HERO PARALLAX MASTER
+            // ==========================================
+            gsap.set(".phase-1", { opacity: 1, y: 0 });
+            gsap.set(".phase-2", { opacity: 0, y: 50 });
+            gsap.set(".phase-3", { opacity: 0, y: 50 });
+            gsap.set(".waterfall-container", { opacity: 0, y: -100 });
+            gsap.set(".layer-mountains", { y: 0 });
+            gsap.set(".layer-mountains-fg", { y: 0 });
+            gsap.set(".sun-orb", { y: 0, scale: 1 });
+            gsap.set(".obj-compass", { x: "0vw", y: "0vh", scale: 1, rotation: 0 });
+
+            const tlHero = gsap.timeline({
+                scrollTrigger: {
+                    trigger: ".parallax-master",
+                    start: "top top",
+                    end: "+=1500",
+                    scrub: 1,
+                    pin: true,
+                }
+            });
+
+            tlHero.to(".scroll-down-indicator", { opacity: 0, duration: 0.5 }, 0)
+                  .to(".phase-1", { opacity: 0, y: -50, duration: 1 }, 0)
+                  .to(".layer-sky", { background: "linear-gradient(180deg, #0f172a 0%, #312e81 50%, #1e1b4b 100%)", duration: 2 }, 0)
+                  .to(".sun-orb", { y: "-30vh", scale: 0.8, opacity: 0.4, duration: 2 }, 0)
+                  .to(".layer-mountains", { y: "20vh", duration: 2 }, 0)
+                  .to(".layer-mountains-fg", { y: "10vh", duration: 2 }, 0)
+                  .to(".obj-compass", { x: "20vw", y: "10vh", scale: 0.7, rotation: 15, duration: 2, ease: "power1.inOut" }, 0)
+                  .to(".bird", { x: "20vw", y: "-20vh", opacity: 0, duration: 1.5 }, 0)
+                  .to(".waterfall-container", { opacity: 1, y: 0, duration: 1.5 }, 0.5)
+                  .to(".phase-2", { opacity: 1, y: 0, duration: 1 }, 1);
+                  
+            tlHero.to({}, { duration: 1 });
+            
+            tlHero.to(".phase-2", { opacity: 0, y: -50, duration: 1 }, 3)
+                  .to(".layer-sky", { background: "linear-gradient(180deg, #1e1b4b 0%, #4c1d95 30%, #ec4899 100%)", duration: 2 }, 3)
+                  .to(".waterfall-container", { x: "-10vw", opacity: 0.2, duration: 2 }, 3)
+                  .to(".layer-mountains", { y: "40vh", opacity: 0.5, duration: 2 }, 3)
+                  .to(".layer-mountains-fg", { y: "30vh", duration: 2 }, 3)
+                  .to(".obj-compass", { x: "-20vw", y: "0vh", scale: 1.2, rotation: -10, duration: 2, ease: "power1.inOut" }, 3)
+                  .to(".phase-3", { opacity: 1, y: 0, duration: 1 }, 4);
+                  
+            tlHero.to({}, { duration: 1 });
+
+            // ==========================================
+            // 2. PARTNERS MARQUEE SKEW
+            // ==========================================
+            // Disable original CSS marquee if we want GSAP to control it, 
+            // or just use ScrollTrigger to alter the existing CSS animation speed/skew.
+            gsap.to(".marquee-track", {
+                scrollTrigger: {
+                    trigger: ".partners",
+                    start: "top bottom",
+                    end: "bottom top",
+                    scrub: 1,
+                    onUpdate: self => {
+                        let skewAmount = self.getVelocity() / 100;
+                        let scaleAmount = 1 + Math.abs(self.getVelocity() / 4000);
+                        gsap.to(".marquee-track", { 
+                            skewX: skewAmount, 
+                            scale: Math.min(scaleAmount, 1.05),
+                            overwrite: "auto", 
+                            duration: 0.5 
+                        });
+                    }
+                }
+            });
+
+            // ==========================================
+            // 3. STATS STAGGER REVEAL
+            // ==========================================
+            gsap.from(".stat-item", {
+                scrollTrigger: {
+                    trigger: ".stats",
+                    start: "top 80%",
+                },
+                y: 50,
+                opacity: 0,
+                duration: 1,
+                stagger: 0.2,
+                ease: "power3.out"
+            });
+
+            // ==========================================
+            // 4. WHY CHOOSE US - IMAGE PARALLAX PIN
+            // ==========================================
+            // Pin the images while text scrolls past
+            ScrollTrigger.create({
+                trigger: ".why-choose",
+                start: "top top",
+                end: "bottom bottom",
+                pin: ".why-images",
+                pinSpacing: false,
+            });
+
+            gsap.from(".service-item", {
+                scrollTrigger: {
+                    trigger: ".why-choose",
+                    start: "top 60%",
+                },
+                x: -50,
+                opacity: 0,
+                stagger: 0.1,
+                duration: 0.8,
+                ease: "power2.out"
+            });
+
+            // ==========================================
+            // 5. FEATURED VIDEOS 3D FLOAT
+            // ==========================================
+            gsap.from(".video-card", {
+                scrollTrigger: {
+                    trigger: ".videos-section",
+                    start: "top 70%",
+                },
+                y: 100,
+                rotationX: -15,
+                opacity: 0,
+                transformOrigin: "top center",
+                stagger: 0.2,
+                duration: 1.2,
+                ease: "back.out(1.7)"
+            });
+
+            // ==========================================
+            // 6. AWARDS GRID STAGGER
+            // ==========================================
+            gsap.from(".award-card", {
+                scrollTrigger: {
+                    trigger: ".awards-grid",
+                    start: "top 85%",
+                },
+                scale: 0.8,
+                opacity: 0,
+                stagger: 0.15,
+                duration: 1,
+                ease: "elastic.out(1, 0.7)"
+            });
+
+            // ==========================================
+            // 7. TESTIMONIALS STAGGER ANIMATION
+            // ==========================================
+            gsap.from(".t-card", {
+                scrollTrigger: {
+                    trigger: ".testimonials",
+                    start: "top 75%",
+                },
+                y: 80,
+                opacity: 0,
+                scale: 0.9,
+                stagger: 0.2,
+                duration: 1,
+                ease: "power3.out"
+            });
+
+            // ==========================================
+            // 8. POPULAR DESTINATIONS STAGGER
+            // ==========================================
+            gsap.from(".dest-card", {
+                scrollTrigger: {
+                    trigger: ".dest-grid",
+                    start: "top 80%",
+                },
+                y: 60,
+                opacity: 0,
+                stagger: 0.15,
+                duration: 1,
+                ease: "power2.out"
+            });
+
+            // ==========================================
+            // 8. ARTICLES IMAGE PARALLAX
+            // ==========================================
+            gsap.utils.toArray(".article-card").forEach(card => {
+                let img = card.querySelector(".article-img");
+                gsap.to(img, {
+                    yPercent: 20,
+                    ease: "none",
+                    scrollTrigger: {
+                        trigger: card,
+                        start: "top bottom",
+                        end: "bottom top",
+                        scrub: true
+                    }
+                });
+            });
+
+            // ==========================================
+            // 9. SCROLL PROGRESS BAR
+            // ==========================================
+            gsap.to(".scroll-progress-bar", {
+                width: "100%",
+                ease: "none",
+                scrollTrigger: {
+                    trigger: document.body,
+                    start: "top top",
+                    end: "bottom bottom",
+                    scrub: true
+                }
+            });
+
+            return () => { 
+                ScrollTrigger.getAll().forEach(t => t.kill()); 
+            };
+        });
+
+        // Mobile fallback
+        mm.add("(max-width: 991px)", () => {
+            gsap.set(".phase-1", { opacity: 1, y: 0 });
+            gsap.set(".phase-2", { opacity: 0, y: 20 });
+            gsap.set(".phase-3", { opacity: 0, y: 20 });
+            gsap.set(".obj-compass", { scale: 0.5, y: "-20vh" });
+
+            const tlMobile = gsap.timeline({
+                scrollTrigger: {
+                    trigger: ".parallax-master",
+                    start: "top top",
+                    end: "+=1000",
+                    scrub: 1,
+                    pin: true,
+                }
+            });
+
+            tlMobile.to(".scroll-down-indicator", { opacity: 0, duration: 0.5 }, 0)
+                    .to(".phase-1", { opacity: 0, duration: 1 }, 0)
+                    .to(".phase-2", { opacity: 1, y: 0, duration: 1 }, 1)
+                    .to(".phase-2", { opacity: 0, duration: 1 }, 3)
+                    .to(".phase-3", { opacity: 1, y: 0, duration: 1 }, 4);
+        });
+    });
+</script>
 @endsection
