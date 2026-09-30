@@ -10,7 +10,7 @@
     <div class="nav-links" id="navLinks">
         <a href="/" class="{{ Request::is('/') ? 'active' : '' }}">Home</a>
         <a href="/about" class="{{ Request::is('about') ? 'active' : '' }}">About Us</a>
-        <a href="#">Our Services</a>
+        <a href="/services" class="{{ Request::is('services') ? 'active' : '' }}">Our Services</a>
         <div class="dropdown">
             <a href="#" class="dropdown-toggle">Destinations <i class="fas fa-chevron-down" style="font-size: 0.7rem;"></i></a>
             <div class="dropdown-menu">
@@ -29,11 +29,11 @@
                 <a href="/destinations/australia"><img src="https://flagcdn.com/au.svg" alt="Australia"> Study in Australia</a>
             </div>
         </div>
-        <a href="#">Immigration & Skill Work</a>
-        <a href="#">Testimonials</a>
+        <a href="/immigration-skill-work" class="{{ Request::is('immigration-skill-work') || Request::is('immigration') ? 'active' : '' }}">Immigration & Skill Work</a>
+        <a href="/testimonials" class="{{ Request::is('testimonials') ? 'active' : '' }}">Testimonials</a>
         <a href="/contact" class="{{ Request::is('contact') ? 'active' : '' }}">Contact</a>
     </div>
     <div class="nav-btns">
-        <a href="#" class="btn-book">Book Appointment</a>
+        <a href="/contact" class="btn-book">Book Appointment</a>
     </div>
 </nav>

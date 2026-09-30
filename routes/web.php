@@ -14,6 +14,22 @@ Route::get('/contact', function () {
     return view('contact');
 });
 
+Route::get('/services', function () {
+    return view('services');
+});
+
+Route::get('/immigration-skill-work', function () {
+    return view('immigration');
+});
+Route::get('/immigration', function () {
+    return view('immigration');
+});
+
+Route::get('/testimonials', function () {
+    return view('testimonials');
+});
+
+
 // ── Destinations ──────────────────────────────────────────
 Route::get('/destinations/malaysia',    fn() => view('destinations.malaysia'));
 Route::get('/destinations/cyprus',      fn() => view('destinations.cyprus'));

@@ -24,7 +24,9 @@
             <ul>
                 <li><a href="/"><i class="fas fa-chevron-right" style="color:#7C3AED;font-size:0.65rem;margin-right:8px;"></i>Home</a></li>
                 <li><a href="/about"><i class="fas fa-chevron-right" style="color:#7C3AED;font-size:0.65rem;margin-right:8px;"></i>About Us</a></li>
-                <li><a href="#"><i class="fas fa-chevron-right" style="color:#7C3AED;font-size:0.65rem;margin-right:8px;"></i>Our Services</a></li>
+                <li><a href="/services"><i class="fas fa-chevron-right" style="color:#7C3AED;font-size:0.65rem;margin-right:8px;"></i>Our Services</a></li>
+                <li><a href="/immigration-skill-work"><i class="fas fa-chevron-right" style="color:#7C3AED;font-size:0.65rem;margin-right:8px;"></i>Immigration & Skill Work</a></li>
+                <li><a href="/testimonials"><i class="fas fa-chevron-right" style="color:#7C3AED;font-size:0.65rem;margin-right:8px;"></i>Testimonials</a></li>
                 <li><a href="/contact"><i class="fas fa-chevron-right" style="color:#7C3AED;font-size:0.65rem;margin-right:8px;"></i>Contact Us</a></li>
             </ul>
         </div>
@@ -32,10 +34,10 @@
         <div class="footer-col">
             <h4>Services</h4>
             <ul>
-                <li><a href="#"><i class="fas fa-chevron-right" style="color:#0891B2;font-size:0.65rem;margin-right:8px;"></i>Visa Assistance</a></li>
-                <li><a href="#"><i class="fas fa-chevron-right" style="color:#0891B2;font-size:0.65rem;margin-right:8px;"></i>Admissions</a></li>
-                <li><a href="#"><i class="fas fa-chevron-right" style="color:#0891B2;font-size:0.65rem;margin-right:8px;"></i>Scholarships</a></li>
-                <li><a href="#"><i class="fas fa-chevron-right" style="color:#0891B2;font-size:0.65rem;margin-right:8px;"></i>IELTS Coaching</a></li>
+                <li><a href="/services#visa-assistance"><i class="fas fa-chevron-right" style="color:#0891B2;font-size:0.65rem;margin-right:8px;"></i>Visa Assistance</a></li>
+                <li><a href="/services#admissions"><i class="fas fa-chevron-right" style="color:#0891B2;font-size:0.65rem;margin-right:8px;"></i>Admissions</a></li>
+                <li><a href="/services#scholarships"><i class="fas fa-chevron-right" style="color:#0891B2;font-size:0.65rem;margin-right:8px;"></i>Scholarships</a></li>
+                <li><a href="/services#ielts-coaching"><i class="fas fa-chevron-right" style="color:#0891B2;font-size:0.65rem;margin-right:8px;"></i>IELTS Coaching</a></li>
             </ul>
         </div>
 
